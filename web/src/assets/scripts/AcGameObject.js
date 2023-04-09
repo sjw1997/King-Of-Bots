@@ -24,7 +24,7 @@ export class AcGameObject {
         for (let i in AC_GAME_OBJECTS) {
             const obj = AC_GAME_OBJECTS[i];
             if (obj === this) {
-                AC_GAME_OBJECTS.splice(i);
+                AC_GAME_OBJECTS.splice(i, 1);
                 break;
             }
         }
@@ -33,7 +33,7 @@ export class AcGameObject {
 
 let last_timestamp;  // 上一次执行的时刻
 const step = (timestamp) => {
-    for (let obj of AC_GAME_OBJECTS) {
+    for (const obj of AC_GAME_OBJECTS) {
         if (!obj.has_called_start) {
             obj.has_called_start = true;
             obj.start();
@@ -41,8 +41,9 @@ const step = (timestamp) => {
             obj.timedelta = timestamp - last_timestamp;
             obj.update();
         }
-        last_timestamp = timestamp;
     }
+
+    last_timestamp = timestamp;
     requestAnimationFrame(step);
 }
 
