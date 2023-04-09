@@ -1,10 +1,10 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
             <router-link class="navbar-brand" :to="{name: 'home'}">King Of Bots</router-link>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -24,7 +24,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><router-link class="dropdown-item" :to="{name: 'user_bot_index'}">我的Bot</router-link></li>
-                            <li><a class="dropdown-item" href="#">退出</a></li>
+                            <li><router-link class="dropdown-item" :to="{name:''}">退出</router-link></li>
                         </ul>
                     </li>
                 </ul>
@@ -32,6 +32,7 @@
         </div>
     </nav>
 </template>
+
 
 <script>
 import { useRoute } from 'vue-router';
