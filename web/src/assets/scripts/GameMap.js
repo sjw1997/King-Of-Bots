@@ -98,7 +98,7 @@ export class GameMap extends AcGameObject {
                 snake0.set_direction(3);
             } else if (e.key === 'ArrowUp') {
                 snake1.set_direction(0);
-            } else if (e.key === 'ArrowRighDWtD') {
+            } else if (e.key === 'ArrowRight') {
                 snake1.set_direction(1);
             } else if (e.key === 'ArrowDown') {
                 snake1.set_direction(2);
