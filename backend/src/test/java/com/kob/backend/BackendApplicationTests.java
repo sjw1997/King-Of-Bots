@@ -12,7 +12,7 @@ class BackendApplicationTests {
     void contextLoads() {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         System.out.println(passwordEncoder.encode("psjw"));
-        System.out.println(passwordEncoder.matches("psjw2", "$2a$10$XXd9eKUNO2wocHG.VmMgde40KQNpfsg7XsHVREGLu5esqAs7CFhRu"));
+        System.out.println(passwordEncoder.matches("psjw", "$2a$10$w0nse/aR7bTikR5J.jTHUuTHD0.a0lpQcE15E97G5yUA63FKLuxRS"));
 
     }
 
