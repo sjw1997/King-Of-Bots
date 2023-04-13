@@ -45,8 +45,8 @@ export default {
                         success() {
                             router.push({name: 'home'});
                         },
-                        error(resp) {
-                            console.log(resp);
+                        error() {
+                            error_message.value = "系统异常，请稍后再试";
                         }
                     });
                 },
