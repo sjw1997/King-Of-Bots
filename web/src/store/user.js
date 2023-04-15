@@ -28,7 +28,7 @@ export default {
     actions: {
         login(context, data) {
             $.ajax({
-                url: "http://localhost:3000/user/account/token/",
+                url: "http://192.168.0.110:3000/user/account/token/",
                 type: "POST",
                 data: {
                     username: data.username,
@@ -50,7 +50,7 @@ export default {
         },
         getInfo(context, data) {
             $.ajax({
-                url: "http://localhost:3000/user/account/info/",
+                url: "http://192.168.0.110:3000/user/account/info/",
                 type: "GET",
                 headers: {
                     'Authorization': "Bearer " + context.state.token

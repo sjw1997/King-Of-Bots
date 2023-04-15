@@ -51,7 +51,7 @@ export default {
                     });
                 },
                 error() {
-                    error_message.value = "用户名或密码错误";
+                    error_message.value = "系统异常，请稍后再试";
                 }
             })
         };
