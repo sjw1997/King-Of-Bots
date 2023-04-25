@@ -5,6 +5,10 @@ export default {
         opponent_photo: "",
         socket: null,
         gamemap: null,
+        a_id: 0,
+        b_id: 0,
+        gameObject: null,
+        loser: "none",
     },
     getters: {
     },
@@ -19,8 +23,16 @@ export default {
         updateStatus(state, status) {
             state.status = status;
         },
-        updateGamemap(state, gamemap) {
-            state.gamemap = gamemap;
+        updateGame(state, game) {
+            state.gamemap = game.map;
+            state.a_id = game.a_id;
+            state.b_id = game.b_id;
+        },
+        updateGameObject(state, gameObject) {
+            state.gameObject = gameObject;
+        },
+        updateLoser(state, loser) {
+            state.loser = loser;
         }
     },
     actions: {

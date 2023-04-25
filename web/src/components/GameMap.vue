@@ -17,7 +17,8 @@ export default {
         const store = useStore();
 
         onMounted(() => {
-            new GameMap(canvas.value.getContext('2d'), parent.value, store);
+            const gameObject = new GameMap(canvas.value.getContext('2d'), parent.value, store);
+            store.commit("updateGameObject", gameObject);
         });
 
         return {

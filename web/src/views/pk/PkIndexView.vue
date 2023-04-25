@@ -1,11 +1,13 @@
 <template>
     <PlayGround v-if="$store.state.pk.status === 'playing'"/>
     <MatchGround v-if="$store.state.pk.status === 'matching'" />
+    <ResultBoard v-if="$store.state.pk.loser !== 'none'" />
 </template>
 
 <script>
 import PlayGround from '@/components/PlayGround.vue'
 import MatchGround from '@/components/MatchGround.vue'
+import ResultBoard from '@/components/ResultBoard.vue'
 import { onMounted, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 
@@ -13,6 +15,7 @@ export default {
     components: {
         PlayGround,
         MatchGround,
+        ResultBoard,
     },
     setup() {
         const store = useStore();
@@ -35,16 +38,31 @@ export default {
             };
             socket.onmessage = (msg) => {
                 const data = JSON.parse(msg.data);
-                console.log(data);
                 if (data.event === "start-matching") {
                     store.commit("updateOpponent", {
                         username: data.opponent_username,
                         photo: data.opponent_photo,
                     });
-                    store.commit("updateGamemap", data.gamemap);
+                    store.commit("updateGame", data.game);
                     setTimeout(() => {
                         store.commit("updateStatus", "playing");
                     }, 1500);
+                } else if (data.event === "move") {
+                    const gameObject = store.state.pk.gameObject;
+                    const [snakeA, snakeB] = gameObject.snakes;
+                    snakeA.set_direction(data.a_direction);
+                    snakeB.set_direction(data.b_direction);
+                } else if (data.event === "result") {
+                    const gameObject = store.state.pk.gameObject;
+                    const [snakeA, snakeB] = gameObject.snakes;
+                    if (data.loser === "all") {
+                        snakeA.status = snakeB.status = "die";
+                    } else if (data.loser === "A") {
+                        snakeA.status = "die";
+                    } else if (data.loser === "B") {
+                        snakeB.status = "die";
+                    }
+                    store.commit("updateLoser", data.loser);
                 }
             };
             socket.onclose = () => {
