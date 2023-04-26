@@ -22,7 +22,7 @@ public class MatchingPool extends Thread {
         MatchingPool.restTemplate = restTemplate;
     }
 
-    public void addPlayer(Integer userId, Integer rating) {
+    public void addPlayer(Integer userId, Integer rating, Integer botId) {
         lock.lock();
         boolean hasInPool = false;
         try {
@@ -33,13 +33,13 @@ public class MatchingPool extends Thread {
                 }
             }
             if (!hasInPool) {
-                MatchingPool.players.add(new Player(userId, rating, 0));
+                MatchingPool.players.add(new Player(userId, botId, rating, 0));
             }
         } finally {
             lock.unlock();
             if (hasInPool) {
                 removePlayer(userId);
-                addPlayer(userId, rating);
+                addPlayer(userId, rating, botId);
             }
         }
     }
@@ -69,10 +69,12 @@ public class MatchingPool extends Thread {
         return ratingDelta <= waitingTimeMin * 10;
     }
 
-    private void sendMatchResult(Integer aId, Integer bId) {
+    private void sendMatchResult(Integer aId, Integer aBotId, Integer bId, Integer bBotId) {
         MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
         data.add("a_id", aId.toString());
+        data.add("a_bot_id", aBotId.toString());
         data.add("b_id", bId.toString());
+        data.add("b_bot_id", bBotId.toString());
         MatchingPool.restTemplate.postForObject(startGameUrl, data, String.class);
     }
 
@@ -87,7 +89,7 @@ public class MatchingPool extends Thread {
                             Player a = players.get(i), b = players.get(j);
                             if (checkValid(a, b)) {
                                 used[i] = used[j] = true;
-                                sendMatchResult(a.getId(), b.getId());
+                                sendMatchResult(a.getId(), a.getBotId(), b.getId(), b.getBotId());
                                 break;
                             }
                         }

@@ -4,13 +4,23 @@
             <div class="col-12 user-tips">
                 {{ user_tips }}
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <div class="user-photo">
                     <img :src="$store.state.user.photo" alt="">
                 </div>
                 <div class="username">{{ $store.state.user.username }}</div>
             </div>
-            <div class="col-6">
+            <div class="col-4">
+                <div class="select-bot">
+                    <select v-model="bot_id" class="form-select" aria-label="Default select example">
+                        <option value="-1" selected>亲自出马</option>
+                        <option v-for="bot in bots" :key="bot.id" :value="bot.id">
+                            {{ bot.title }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
                 <div class="user-photo">
                     <img :src="$store.state.pk.opponent_photo" alt="">
                 </div>
@@ -28,11 +38,14 @@
 <script>
 import store from '@/store';
 import { ref } from 'vue';
+import $ from 'jquery';
 
 export default {
     setup() {
         let btn_message = ref("开始匹配");
         let user_tips = ref("");
+        let bots = ref([]);
+        let bot_id = ref(-1);
 
         const click_btn = () => {
             let data = null;
@@ -40,7 +53,8 @@ export default {
                 btn_message.value = "取消";
                 user_tips.value = "寻找对手中...";
                 data = {
-                    event: "start-matching"
+                    event: "start-matching",
+                    bot_id: bot_id.value,
                 };
             } else {
                 btn_message.value = "开始匹配";
@@ -52,10 +66,31 @@ export default {
             store.state.pk.socket.send(JSON.stringify(data));
         };
 
+
+        const refresh_bots = () => {
+            $.ajax({
+                url: "http://192.168.0.110:3000/user/bot/getlist/",
+                type: "GET",
+                headers: {
+                    Authorization: `Bearer ${store.state.user.token}`
+                },
+                success(resp) {
+                    bots.value = resp;
+                },
+                error(resp) {
+                    console.log(resp);
+                }
+            })
+        };
+
+        refresh_bots();
+
         return {
             click_btn,
             btn_message,
             user_tips,
+            bots,
+            bot_id,
         }
     }
 }
@@ -88,5 +123,9 @@ div > img {
     font-weight: bold;
     margin-top: 10px;
     color: white;
+}
+
+.select-bot {
+    margin-top: 25vh;
 }
 </style>

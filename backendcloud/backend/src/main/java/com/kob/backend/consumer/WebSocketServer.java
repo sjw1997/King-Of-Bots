@@ -3,8 +3,10 @@ package com.kob.backend.consumer;
 import com.alibaba.fastjson2.JSONObject;
 import com.kob.backend.consumer.utils.Game;
 import com.kob.backend.consumer.utils.JwtAuthentication;
+import com.kob.backend.mapper.BotMapper;
 import com.kob.backend.mapper.RecordMapper;
 import com.kob.backend.mapper.UserMapper;
+import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,10 +35,10 @@ public class WebSocketServer {
 
     private static UserMapper userMapper;
     public static RecordMapper recordMapper;
-    private static RestTemplate restTemplate;
+    private static BotMapper botMapper;
+    public static RestTemplate restTemplate;
     private final static String addPlayerUrl = "http://127.0.0.1:3001/player/add/";
     private final static String removePlayerUrl = "http://127.0.0.1:3001/player/remove/";
-
 
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
@@ -46,6 +48,10 @@ public class WebSocketServer {
     @Autowired
     public void setRecordMapper(RecordMapper recordMapper) {
         WebSocketServer.recordMapper = recordMapper;
+    }
+    @Autowired
+    public void setBotMapper(BotMapper botMapper) {
+        WebSocketServer.botMapper = botMapper;
     }
 
     @Autowired
@@ -86,8 +92,9 @@ public class WebSocketServer {
         String event = data.getString("event");
         System.out.println("received message");
         if ("start-matching".equals(event)) {
-            startMatching();
-            System.out.println("start matching " + this.user.getUsername());
+            Integer botId = data.getInteger("bot_id");
+            startMatching(botId);
+            System.out.println("start matching " + this.user.getUsername() + " " + botId);
         } else if ("stop-matching".equals(event)) {
             stopMatching();
             System.out.println("stop matching " + this.user.getUsername());
@@ -99,16 +106,32 @@ public class WebSocketServer {
 
     private void move(int direction) {
         if (user.getId().equals(game.getPlayerA().getId())) {
-            game.setNextStepA(direction);
+            if (game.getPlayerA().getBotId().equals(-1)) {
+                game.setNextStepA(direction);
+            }
         } else if (user.getId().equals(game.getPlayerB().getId())) {
-            game.setNextStepB(direction);
+            if (game.getPlayerB().getBotId().equals(-1)) {
+                game.setNextStepB(direction);
+            }
         }
     }
 
-    public static void startGame(Integer aId, Integer bId) {
-        User a = userMapper.selectById(aId);
-        User b = userMapper.selectById(bId);
-        Game game = new Game(13, 14, 20, a.getId(), b.getId());
+    public Game getGame() {
+        return game;
+    }
+
+    public static void startGame(Integer aId, Integer aBotId, Integer bId, Integer bBotId) {
+        User a = userMapper.selectById(aId), b = userMapper.selectById(bId);
+        Bot botA = botMapper.selectById(aBotId), botB = botMapper.selectById(bBotId);
+        Game game = new Game(
+                13,
+                14,
+                20,
+                a.getId(),
+                botA,
+                b.getId(),
+                botB
+        );
         game.createMap();
         if (WebSocketServer.users.get(a.getId()) != null) {
             WebSocketServer.users.get(a.getId()).game = game;
@@ -143,10 +166,11 @@ public class WebSocketServer {
         System.out.println("matched " + a.getUsername() + " " + b.getUsername());
     }
 
-    private void startMatching() {
+    private void startMatching(Integer botId) {
         MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
         data.add("user_id", user.getId().toString());
         data.add("rating", user.getRating().toString());
+        data.add("bot_id", botId.toString());
         restTemplate.postForObject(WebSocketServer.addPlayerUrl, data, String.class);
     }
 

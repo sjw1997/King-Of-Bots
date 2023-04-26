@@ -44,9 +44,10 @@ export default {
                         photo: data.opponent_photo,
                     });
                     store.commit("updateGame", data.game);
-                    setTimeout(() => {
-                        store.commit("updateStatus", "playing");
-                    }, 1500);
+                    store.commit("updateStatus", "playing");
+                    // setTimeout(() => {
+                    //     store.commit("updateStatus", "playing");
+                    // }, 200);
                 } else if (data.event === "move") {
                     const gameObject = store.state.pk.gameObject;
                     const [snakeA, snakeB] = gameObject.snakes;
@@ -73,6 +74,7 @@ export default {
         onUnmounted(() => {
             socket.close();
             store.commit("updateStatus", "matching");
+            store.commit("updateLoser", "none");
         });
     }
 }
