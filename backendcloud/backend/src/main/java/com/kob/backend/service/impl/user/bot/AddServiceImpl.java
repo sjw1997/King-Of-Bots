@@ -1,5 +1,6 @@
 package com.kob.backend.service.impl.user.bot;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kob.backend.mapper.BotMapper;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.User;
@@ -55,6 +56,13 @@ public class AddServiceImpl implements AddService {
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl loginUser = (UserDetailsImpl) usernamePasswordAuthenticationToken.getPrincipal();
         User user = loginUser.getUser();
+
+        QueryWrapper<Bot> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", user.getId());
+        if (botMapper.selectCount(queryWrapper) >= 10) {
+            map.put(ERROR_MESSAGE, "最多只能创建10个Bot");
+            return map;
+        }
 
         Date time = new Date();
         Bot bot = new Bot(

@@ -23,7 +23,7 @@
                         @refresh_bots="refresh_bots"/>
                     </div>
                     <div class="card-body">
-                        <table class="table table-hover">
+                        <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>名称</th>

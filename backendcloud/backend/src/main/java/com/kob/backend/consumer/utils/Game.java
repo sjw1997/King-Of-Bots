@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.kob.backend.consumer.WebSocketServer;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.Record;
+import com.kob.backend.pojo.User;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -286,7 +287,23 @@ public class Game extends Thread {
         saveToDatabase();
     }
 
+    private void updateUserRating(Player player, Integer delta) {
+        User user = WebSocketServer.userMapper.selectById(player.getId());
+        user.setRating(user.getRating() + delta);
+        WebSocketServer.userMapper.updateById(user);
+    }
+
     private void saveToDatabase() {
+        if (!"all".equals(loser)) {
+            if ("A".equals(loser)) {
+                updateUserRating(playerA, -2);
+                updateUserRating(playerB, 5);
+            } else if ("B".equals(loser)) {
+                updateUserRating(playerA, 5);
+                updateUserRating(playerB, -2);
+            }
+        }
+
         Record record = new Record(
                 null,
                 playerA.getId(),

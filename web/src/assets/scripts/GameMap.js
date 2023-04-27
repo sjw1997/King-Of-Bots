@@ -11,7 +11,7 @@ export class GameMap extends AcGameObject {
         this.L = 0;
         this.store = store;
 
-        this.g = store.state.pk.gamemap;
+        this.g = store.state.pk.gamemap;        
         this.rows = this.g.length;
         this.cols = this.g[0].length;
 
@@ -34,35 +34,61 @@ export class GameMap extends AcGameObject {
     }
 
     add_listening_events() {
-        this.ctx.canvas.focus();
+        if (this.store.state.record.is_record) {
+            let k = 0;
+            const a_steps = this.store.state.record.a_steps;
+            const b_steps = this.store.state.record.b_steps;
+            const length = a_steps.length;
+            const [snakeA, snakeB] = this.snakes;
+            const loser = this.store.state.record.record_loser;
 
-        this.ctx.canvas.addEventListener("keydown", e => {
-            let d = -1;
-            if (e.key === 'w' || e.key === 'W') {
-                d = 0;
-            } else if (e.key === 'd' || e.key === 'D') {
-                d = 1;
-            } else if (e.key === 's' || e.key === 'S') {
-                d = 2;
-            } else if (e.key === 'a' || e.key === 'A') {
-                d = 3;
-            } else if (e.key === 'ArrowUp') {
-                d = 0;
-            } else if (e.key === 'ArrowRight') {
-                d = 1;
-            } else if (e.key === 'ArrowDown') {
-                d = 2;
-            } else if (e.key === 'ArrowLeft') {
-                d = 3;
-            }
+            const interval_id = setInterval(() => {
+                if (k >= length - 1) {
+                    if (loser === "all") {
+                        snakeA.status = snakeB.status = "die";
+                    } else if (loser === "A") {
+                        snakeA.status = "die";
+                    } else if (loser === "B") {
+                        snakeB.status = "die";
+                    }
+                    clearInterval(interval_id);
+                } else {
+                    snakeA.set_direction(parseInt(a_steps[k]));
+                    snakeB.set_direction(parseInt(b_steps[k]));
+                }
+                k ++ ;
+            }, 300);
+        } else {
+            this.ctx.canvas.focus();
 
-            if (d >= 0) {
-                this.store.state.pk.socket.send(JSON.stringify({
-                    event: "move",
-                    direction: d
-                }));
-            }
-        });
+            this.ctx.canvas.addEventListener("keydown", e => {
+                let d = -1;
+                if (e.key === 'w' || e.key === 'W') {
+                    d = 0;
+                } else if (e.key === 'd' || e.key === 'D') {
+                    d = 1;
+                } else if (e.key === 's' || e.key === 'S') {
+                    d = 2;
+                } else if (e.key === 'a' || e.key === 'A') {
+                    d = 3;
+                } else if (e.key === 'ArrowUp') {
+                    d = 0;
+                } else if (e.key === 'ArrowRight') {
+                    d = 1;
+                } else if (e.key === 'ArrowDown') {
+                    d = 2;
+                } else if (e.key === 'ArrowLeft') {
+                    d = 3;
+                }
+    
+                if (d >= 0) {
+                    this.store.state.pk.socket.send(JSON.stringify({
+                        event: "move",
+                        direction: d
+                    }));
+                }
+            });
+        }
     }
 
     start() {

@@ -28,7 +28,7 @@
                             enableSnippets: true, // 启用代码段
                             enableLiveAutocompletion: true, // 启用实时自动完成
                             fontSize: 14, //设置字号
-                            tabSize: 2, // 标签大小
+                            tabSize: 4, // 标签大小
                             showPrintMargin: false, //去除编辑器里的竖线
                             highlightActiveLine: true,
                             }"
@@ -64,6 +64,7 @@ require("ace-builds").version +
 "/src-noconflict/");
 
 export default {
+
     components: {
         VAceEditor,
     },
@@ -80,13 +81,21 @@ export default {
             type: Object,
             required: false,
         },
-        
     },
     setup(props, context) {
         const bot = reactive({
             id: "",
             description: "",
-            content: "",
+            content: `\
+package org.kob.botrunningsystem.utils;
+
+public class Bot implements org.kob.botrunningsystem.utils.BotInterface {
+    @Override
+    public Integer nextMove(String input) {
+        return 0;
+    }
+}
+`,
             title: "",
         });
         let error_message = ref("");
