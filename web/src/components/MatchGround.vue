@@ -12,7 +12,7 @@
             </div>
             <div class="col-4">
                 <div class="select-bot">
-                    <select v-model="bot_id" class="form-select" aria-label="Default select example">
+                    <select :disabled="has_selected" v-model="bot_id" class="form-select" aria-label="Default select example">
                         <option value="-1" selected>亲自出马</option>
                         <option v-for="bot in bots" :key="bot.id" :value="bot.id">
                             {{ bot.title }}
@@ -46,10 +46,12 @@ export default {
         let user_tips = ref("");
         let bots = ref([]);
         let bot_id = ref(-1);
+        let has_selected = ref(false);
 
         const click_btn = () => {
             let data = null;
             if (btn_message.value === "开始匹配") {
+                has_selected.value = true;
                 btn_message.value = "取消";
                 user_tips.value = "寻找对手中...";
                 data = {
@@ -57,6 +59,7 @@ export default {
                     bot_id: bot_id.value,
                 };
             } else {
+                has_selected.value = false;
                 btn_message.value = "开始匹配";
                 user_tips.value = "";
                 data = {
@@ -91,6 +94,7 @@ export default {
             user_tips,
             bots,
             bot_id,
+            has_selected,
         }
     }
 }

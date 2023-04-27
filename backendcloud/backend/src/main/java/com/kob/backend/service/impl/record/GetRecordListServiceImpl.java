@@ -46,9 +46,9 @@ public class GetRecordListServiceImpl implements GetRecordListService {
 
             String res = "平局";
             if ("A".equals(record.getLoser())) {
-                res = "B胜";
+                res = "红方胜";
             } else if ("B".equals(record.getLoser())) {
-                res = "A胜";
+                res = "蓝方胜";
             }
             item.put("result", res);
 

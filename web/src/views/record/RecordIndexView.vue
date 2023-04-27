@@ -3,8 +3,8 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>A</th>
-                    <th>B</th>
+                    <th>蓝方</th>
+                    <th>红方</th>
                     <th>对局结果</th>
                     <th>对局时间</th>
                     <th>操作</th>
@@ -124,6 +124,8 @@ export default {
                         a_id: item.record.aid,
                         b_id: item.record.bid,
                     });
+                    store.commit("updateAUsername", item.a_username);
+                    store.commit("updateBUsername", item.b_username);
                     router.push({
                         name: "record_content",
                         params: {
