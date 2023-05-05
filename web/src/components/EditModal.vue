@@ -89,10 +89,22 @@ export default {
             content: `\
 package org.kob.botrunningsystem.utils;
 
-public class Bot implements org.kob.botrunningsystem.utils.BotInterface {
-    @Override
+import java.io.File;
+
+public class Bot implements java.util.function.Supplier {
     public Integer nextMove(String input) {
         return 0;
+    }
+
+    @Override
+    public Integer get() {
+        File file = new File("input.txt");
+        try {
+            Scanner sc = new Scanner(file);
+            return nextMove(sc.next());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 `,
@@ -112,7 +124,7 @@ public class Bot implements org.kob.botrunningsystem.utils.BotInterface {
             if (props.modal_title === "创建Bot") {
                 error_message.value = "";
                 $.ajax({
-                    url: "http://192.168.0.110:3000/user/bot/add/",
+                    url: "https://app5212.acapp.acwing.com.cn/api/user/bot/add/",
                     type: "POST",
                     data: {
                         title: bot.title,
@@ -137,7 +149,7 @@ public class Bot implements org.kob.botrunningsystem.utils.BotInterface {
             } else {
                 error_message.value = "";
                 $.ajax({
-                    url: "http://192.168.0.110:3000/user/bot/update/",
+                    url: "https://app5212.acapp.acwing.com.cn/api/user/bot/update/",
                     type: "POST",
                     data: {
                         bot_id: bot.id,

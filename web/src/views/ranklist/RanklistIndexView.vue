@@ -69,7 +69,7 @@ export default {
         const pull_page = () => {
             current_page.value = parseInt(router.currentRoute.value.params.page)
             $.ajax({
-                url: `http://192.168.0.110:3000/ranklist/getlist/${current_page.value}/`,
+                url: `https://app5212.acapp.acwing.com.cn/api/ranklist/getlist/${current_page.value}/`,
                 type: "GET",
                 success(resp) {
                     users.value = resp.users;

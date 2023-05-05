@@ -12,7 +12,7 @@ public class GetRankListController {
     @Autowired
     private GetRankListService getRankListService;
 
-    @GetMapping("/ranklist/getlist/{page}/")
+    @GetMapping("/api/ranklist/getlist/{page}/")
     public JSONObject getList(@PathVariable Integer page) {
         System.out.println("ranklist page: " + page);
         return getRankListService.getList(page);

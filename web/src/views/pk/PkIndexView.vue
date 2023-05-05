@@ -27,7 +27,7 @@ export default {
                 photo: "https://cdn.acwing.com/media/article/image/2022/08/09/1_1db2488f17-anonymous.png"
             });
             store.commit("updateIsRecord", false);
-            const url = `ws://192.168.0.110:3000/websocket/${store.state.user.token}/`;
+            const url = `wss://app5212.acapp.acwing.com.cn/websocket/${store.state.user.token}/`;
             socket = new WebSocket(url);
             store.commit("updateSocket", socket);
 

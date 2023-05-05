@@ -75,7 +75,7 @@ export default {
 
         const refresh_bots = () => {
             $.ajax({
-                url: "http://192.168.0.110:3000/user/bot/getlist/",
+                url: "https://app5212.acapp.acwing.com.cn/api/user/bot/getlist/",
                 type: "GET",
                 headers: {
                     Authorization: `Bearer ${store.state.user.token}`
@@ -93,7 +93,7 @@ export default {
 
         const remove_bot = (bot_id) => {
             $.ajax({
-                url: "http://192.168.0.110:3000/user/bot/remove/",
+                url: "https://app5212.acapp.acwing.com.cn/api/user/bot/remove/",
                 type: "POST",
                 data: {
                     bot_id

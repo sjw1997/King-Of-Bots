@@ -1,4 +1,4 @@
-package org.kob;
+package org.kob.matchingsystem;
 
 
 import org.kob.matchingsystem.service.impl.MatchingServiceImpl;

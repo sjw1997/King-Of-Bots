@@ -115,7 +115,6 @@ public class MatchingPool extends Thread {
             for (Player player : players) {
                 player.setWaitingTime(player.getWaitingTime() + 1);
             }
-            System.out.println(MatchingPool.players.toString());
         } finally {
             lock.unlock();
         }
