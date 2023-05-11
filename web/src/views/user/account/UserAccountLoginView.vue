@@ -35,6 +35,23 @@ export default {
         let error_message = ref('');
 
         const store = useStore();
+        
+        const jwt_token = localStorage.getItem("jwt_token");
+        if (jwt_token) {
+            store.commit("updateToken", jwt_token);
+            store.dispatch("getInfo", {
+                success() {
+                    router.push({name: 'home'});
+                    store.commit("updatePullingInfo", false);
+                },
+                error() {
+                    store.commit("updatePullingInfo", false);
+                }
+            })
+        } else {
+            store.commit("updatePullingInfo", false);
+        }
+
         const login = () => {
             error_message.value = "";
             store.dispatch("login", {
