@@ -7,6 +7,7 @@ import UserBotIndexView from '@/views/user/bots/UserBotIndexView';
 import NotFoundView from '@/views/error/NotFoundView';
 import UserAccountLoginView from '@/views/user/account/UserAccountLoginView';
 import UserAccountRegisterView from '@/views/user/account/UserAccountRegisterView';
+import UserAccountAcWingWebReceiveCodeView from '@/views/user/account/UserAccountAcWingWebReceiveCodeView';
 import store from '@/store';
 
 const routes = [
@@ -70,6 +71,14 @@ const routes = [
     path: "/user/account/register/",
     name: "user_account_register",
     component: UserAccountRegisterView,
+    meta: {
+      requestAuth: false,
+    }
+  },
+  {
+    path: "/user/account/web/receive_code/",
+    name: "user_account_acwing_web_receive_code",
+    component: UserAccountAcWingWebReceiveCodeView,
     meta: {
       requestAuth: false,
     }
