@@ -103,35 +103,27 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  const jwt_token = localStorage.getItem("jwt_token");
+  if (jwt_token) {
+    store.commit("updateToken", jwt_token);
+    store.dispatch("getInfo", {
+      success() {
+        store.commit("updatePullingInfo", false);
+      },
+      error() {
+        localStorage.removeItem('jwt_token');
+        store.commit("updatePullingInfo", false);
+      }
+    })
+  }
+
   if (store.state.user.is_login || !to.meta.requestAuth) {
     store.commit("updatePullingInfo", false);
     next();
   } else {
-    const jwt_token = localStorage.getItem("jwt_token");
-    if (jwt_token) {
-      store.commit("updateToken", jwt_token);
-      store.dispatch("getInfo", {
-        success() {
-          store.commit("updatePullingInfo", false);
-          next();
-        },
-        error() {
-          localStorage.removeItem('jwt_token');
-          store.commit("updatePullingInfo", false);
-          next({name: 'user_account_login'});
-        }
-      })
-    } else {
-      store.commit("updatePullingInfo", false);
-      next({name: 'user_account_login'});
-    }
+    store.commit("updatePullingInfo", false);
+    next({name: 'user_account_login'});
   }
-
-  // if (to.meta.requestAuth && !store.state.user.is_login) {
-  //   next({name: 'user_account_login'});
-  // } else {
-  //   next();
-  // }
 })
 
 export default router

@@ -25,9 +25,11 @@
                     <td>{{ item.result }}</td>
                     <td>{{ item.record.createtime }}</td>
                     <td>
-                        <button @click="open_record_cotent(item.record.id)" type="button" class="btn btn-secondary btn-sm">
-                            查看录像
-                        </button>
+                        <router-link :to="{name: 'record_content', params: {'recordId': item.record.id}}">
+                            <button type="button" class="btn btn-secondary btn-sm">
+                                查看录像
+                            </button>
+                        </router-link>
                     </td>
                 </tr>
             </tbody>
@@ -94,22 +96,8 @@ export default {
         };
         pull_page();
 
-        const open_record_cotent = (recordId) => {
-            for (const item of items.value) {
-                if (item.record.id === recordId) {
-                    router.push({
-                        name: "record_content",
-                        params: {
-                            recordId
-                        }
-                    });
-                }
-            }
-        };
-
         return {
             items,
-            open_record_cotent,
             pages,
             pull_page,
             current_page,
