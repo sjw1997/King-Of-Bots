@@ -6,6 +6,7 @@ export default {
         b_steps: "",
         b_username: "",
         record_loser: "",
+        pulling_record_content: false,
     },
     getters: {
     },
@@ -28,6 +29,9 @@ export default {
         updateRecordLoser(state, record_loser) {
             state.record_loser = record_loser;
         },
+        updatePullingRecordContent(state, pulling_record_content) {
+            state.pulling_record_content = pulling_record_content;
+        }
     },
     actions: {
     },

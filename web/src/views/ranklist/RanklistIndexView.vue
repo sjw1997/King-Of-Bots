@@ -75,9 +75,6 @@ export default {
                     users.value = resp.users;
                     page_count.value = resp.page_count;
                     update_pages();
-                },
-                error(resp) {
-                    console.log(resp);
                 }
             });
         };

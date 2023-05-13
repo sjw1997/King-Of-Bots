@@ -79,9 +79,6 @@ export default {
                 },
                 success(resp) {
                     bots.value = resp;
-                },
-                error(resp) {
-                    console.log(resp);
                 }
             })
         };

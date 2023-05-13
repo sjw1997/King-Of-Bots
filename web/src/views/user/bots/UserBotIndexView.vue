@@ -82,9 +82,6 @@ export default {
                 },
                 success(resp) {
                     bots.value = resp;
-                },
-                error(resp) {
-                    console.log(resp);
                 }
             })
         };
@@ -105,9 +102,6 @@ export default {
                     if (resp.error_message === "success") {
                         refresh_bots();
                     }
-                },
-                error(resp) {
-                    console.log(resp);
                 }
             });
         };

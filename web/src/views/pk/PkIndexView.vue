@@ -31,12 +31,6 @@ export default {
             socket = new WebSocket(url);
             store.commit("updateSocket", socket);
 
-            socket.onopen = () => {
-                console.log("connected");
-            };
-            socket.onclose = () => {
-                console.log("disconnected");
-            };
             socket.onmessage = (msg) => {
                 const data = JSON.parse(msg.data);
                 if (data.event === "start-matching") {
@@ -67,9 +61,6 @@ export default {
                     store.commit("updateLoser", data.loser);
                 }
             };
-            socket.onclose = () => {
-                console.log("disconnected");
-            }
         });  
 
         onUnmounted(() => {

@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/user/account/token/",
                         "/api/user/account/register/",
                         "/api/record/getlist/{page}/",
+                        "/api/record/getcontent/{recordId}/",
                         "/api/ranklist/getlist/{page}/",
                         "/api/user/account/acapp/apply_code/",
                         "/api/user/account/acapp/receive_code/",

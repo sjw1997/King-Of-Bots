@@ -55,7 +55,6 @@ import ContentField from '@/components/ContentField.vue';
 import router from '@/router';
 import $ from 'jquery';
 import { ref } from 'vue';
-import { useStore } from 'vuex';
 
 export default {
     components: {
@@ -81,7 +80,6 @@ export default {
             pages.value = newPages;
         };
 
-        const store = useStore();
         const pull_page = () => {
             current_page.value = parseInt(router.currentRoute.value.params.page)
             $.ajax({
@@ -91,41 +89,14 @@ export default {
                     items.value = resp.items;
                     page_count.value = resp.page_count;
                     update_pages();
-                },
-                error(resp) {
-                    console.log(resp);
                 }
             });
         };
         pull_page();
 
-        const stringTo2D = (map) => {
-            let g = [];
-            for (let i = 0, k = 0; i < 13; i ++ ) {
-                let line = [];
-                for (let j = 0; j < 14; j ++ , k ++ ) {
-                    if (map[k] === '0') line.push(false);
-                    else if(map[k] === '1') line.push(true);
-                }
-                g.push(line);
-            }
-            return g;
-        };
-
         const open_record_cotent = (recordId) => {
             for (const item of items.value) {
                 if (item.record.id === recordId) {
-                    store.commit("updateIsRecord", true);
-                    store.commit("updateASteps", item.record.asteps);
-                    store.commit("updateBSteps", item.record.bsteps);
-                    store.commit("updateRecordLoser", item.record.loser);
-                    store.commit("updateGame", {
-                        map: stringTo2D(item.record.map),
-                        a_id: item.record.aid,
-                        b_id: item.record.bid,
-                    });
-                    store.commit("updateAUsername", item.a_username);
-                    store.commit("updateBUsername", item.b_username);
                     router.push({
                         name: "record_content",
                         params: {
