@@ -14,7 +14,6 @@ class Player:
     def __init__(self, username, password):
         self.username = username
         self.password = password
-        self.id = id
     
     def login(self):
         get_token_url = "https://app5212.acapp.acwing.com.cn/api/user/account/token/"
