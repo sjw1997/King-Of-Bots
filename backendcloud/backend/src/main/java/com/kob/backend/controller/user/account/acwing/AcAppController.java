@@ -4,7 +4,6 @@ import com.alibaba.fastjson2.JSONObject;
 import com.kob.backend.service.user.account.acwing.AcAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +21,6 @@ public class AcAppController {
 
     @GetMapping("/api/user/account/acapp/receive_code/")
     public JSONObject receiveCode(@RequestParam Map<String, String> data) {
-        System.out.println(data.toString());
         String code = data.get("code");
         String state = data.get("state");
         return acAppService.receiveCode(code, state);
