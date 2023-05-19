@@ -17,4 +17,5 @@ public class User {
     private String photo;
     private Integer rating;
     private String openid;
+    private String openidQq;
 }

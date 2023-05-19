@@ -15,9 +15,22 @@
                     <button type="submit" class="btn btn-primary">登录</button>
                 </form>
                 <div style="text-align: center; margin-top: 20px;">
-                    <img @click="acwing_login" style="width: 30px; cursor: pointer;" src="https://cdn.acwing.com/media/article/image/2022/09/06/1_32f001fd2d-acwing_logo.png" alt="">
-                    <br>
-                    AcWing一键登录
+                    <div @click="acwing_login" style="margin-bottom: 5px; cursor: pointer;">
+                        <img style="width: 30px;" src="https://cdn.acwing.com/media/article/image/2022/09/06/1_32f001fd2d-acwing_logo.png" alt="">
+                        Acwing一键登录
+                    </div>
+                    <div @click="qq_login" style="cursor: pointer;">
+                        <img 
+                        style="height: 30px;"
+                        src="https://wiki.connect.qq.com/wp-content/uploads/2013/10/03_qq_symbol-1-250x300.png"
+                        />
+                        QQ账户登录
+                    </div>
+                    
+                    
+                </div>
+                <div @click="qq_login">
+                    
                 </div>
             </div>
         </div>
@@ -91,12 +104,25 @@ export default {
             });
         };
 
+        const qq_login = () => {
+            $.ajax({
+                url: "https://app5212.acapp.acwing.com.cn/api/user/account/qq/apply_code/",
+                type: "GET",
+                success(resp) {
+                    if (resp.result === "success") {
+                        window.location.replace(resp.apply_code_url);
+                    }
+                }
+            });
+        };
+
         return {
             username,
             password,
             error_message,
             login,
             acwing_login,
+            qq_login,
         }
     }
 }

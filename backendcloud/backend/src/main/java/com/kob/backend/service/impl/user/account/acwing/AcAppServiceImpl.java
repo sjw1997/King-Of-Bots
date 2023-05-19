@@ -134,7 +134,8 @@ public class AcAppServiceImpl implements AcAppService {
                 null,
                 photo,
                 1500,
-                openid
+                openid,
+                null
         );
         userMapper.insert(user);
         String jwt = JwtUtil.createJWT(user.getId().toString());
