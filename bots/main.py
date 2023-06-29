@@ -84,7 +84,7 @@ class Player:
         
         url = "wss://app5212.acapp.acwing.com.cn/websocket/%s/" % (self.jwt_token)
         self.ws = websocket.WebSocketApp(url, on_message=on_message, on_open=on_open)
-        self.ws.run_forever()
+        self.ws.run_forever(ping_interval=20, ping_timeout=10)
 
 
 if __name__ == "__main__":
