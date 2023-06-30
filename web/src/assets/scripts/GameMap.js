@@ -3,7 +3,7 @@ import { Snake } from "./Snake";
 import { Wall } from "./Wall";
 
 export class GameMap extends AcGameObject {
-    constructor(ctx, parent, timer, store) {
+    constructor(ctx, parent, timer, round, store) {
         super();
 
         this.ctx = ctx;
@@ -27,6 +27,9 @@ export class GameMap extends AcGameObject {
         this.time_left = this.schedule_time; // 单位：毫秒
         this.has_input = false;
         this.automatically_move = this.store.state.pk.my_bot_id !== -1;
+    
+        this.round = round;
+        this.steps = 1;
     }
  
     create_walls() {        
@@ -127,6 +130,7 @@ export class GameMap extends AcGameObject {
         }
         this.time_left = this.schedule_time;
         this.has_input = false;
+        this.steps ++ ;
     }
 
     update_size() {
@@ -154,10 +158,15 @@ export class GameMap extends AcGameObject {
         }
     }
 
+    update_round() {
+        this.round.innerText = `第 ${this.steps} 回合`
+    }
+
     update() {
         this.update_size();
         if (this.check_ready()) {
             this.next_step();
+            this.update_round();
         }
         this.update_timer();
         this.render();

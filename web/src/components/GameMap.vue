@@ -1,4 +1,5 @@
 <template>
+    <div ref="round" class="round">第 1 回合</div>
     <div ref="timer" class="timer" v-if="!$store.state.record.is_record">
         倒计时： 5
     </div>
@@ -17,11 +18,12 @@ export default {
         let parent = ref(null);
         let canvas = ref(null);
         let timer = ref(null);
+        let round = ref(null);
         
         const store = useStore();
 
         onMounted(() => {
-            const gameObject = new GameMap(canvas.value.getContext('2d'), parent.value, timer.value, store);
+            const gameObject = new GameMap(canvas.value.getContext('2d'), parent.value, timer.value, round.value, store);
             store.commit("updateGameObject", gameObject);
         });
 
@@ -29,6 +31,7 @@ export default {
             parent,
             canvas,
             timer,
+            round,
         }
     }
 }
@@ -47,10 +50,20 @@ export default {
 .timer {
     width: 100%;
     height: 30px;
-    margin-top: 5vh;
     margin-bottom: 2vh;
     text-align: center;
     font-size: 28px;
     font-weight: bold;
+}
+
+.round {
+    width: 100%;
+    height: 30px;
+    margin-top: 5vh;
+    margin-bottom: 2vh;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    font-style: italic;
 }
 </style>
