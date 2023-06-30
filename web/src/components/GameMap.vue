@@ -1,4 +1,7 @@
 <template>
+    <div ref="timer" class="timer" v-if="!$store.state.record.is_record">
+        倒计时： 5
+    </div>
     <div ref="parent" class="gamemap">
         <canvas ref="canvas" tabindex="0"></canvas>
     </div>
@@ -13,17 +16,19 @@ export default {
     setup() {
         let parent = ref(null);
         let canvas = ref(null);
+        let timer = ref(null);
         
         const store = useStore();
 
         onMounted(() => {
-            const gameObject = new GameMap(canvas.value.getContext('2d'), parent.value, store);
+            const gameObject = new GameMap(canvas.value.getContext('2d'), parent.value, timer.value, store);
             store.commit("updateGameObject", gameObject);
         });
 
         return {
             parent,
             canvas,
+            timer,
         }
     }
 }
@@ -37,5 +42,15 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.timer {
+    width: 100%;
+    height: 30px;
+    margin-top: 5vh;
+    margin-bottom: 2vh;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
 }
 </style>

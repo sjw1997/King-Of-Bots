@@ -1,13 +1,13 @@
 <template>
     <div class="snake-explanation">
-            <div>
-                <span class="snake-explanation-color" style="color: #4876EC;">蓝方: </span>
-                <span>{{ a_username }}</span>
-            </div>
-            <div>
-                <span class="snake-explanation-color" style="color: #F94848;">红方: </span>
-                <span>{{ b_username }}</span>
-            </div>
+        <div>
+            <span class="snake-explanation-color" style="color: #4876EC;">蓝方: </span>
+            <span>{{ a_username }}</span>
+        </div>
+        <div>
+            <span class="snake-explanation-color" style="color: #F94848;">红方: </span>
+            <span>{{ b_username }}</span>
+        </div>
     </div>
     <div class="playground">
         <GameMap />

@@ -3,7 +3,7 @@ import { Snake } from "./Snake";
 import { Wall } from "./Wall";
 
 export class GameMap extends AcGameObject {
-    constructor(ctx, parent, store) {
+    constructor(ctx, parent, timer, store) {
         super();
 
         this.ctx = ctx;
@@ -21,6 +21,12 @@ export class GameMap extends AcGameObject {
             new Snake({id: 0, color: "#4876EC", r: this.rows - 2, c: 1}, this),
             new Snake({id: 1, color: "#F94848", r: 1, c: this.cols - 2}, this)
         ];
+
+        this.timer = timer;
+        this.schedule_time = 6000;
+        this.time_left = this.schedule_time; // 单位：毫秒
+        this.has_input = false;
+        this.automatically_move = this.store.state.pk.my_bot_id !== -1;
     }
  
     create_walls() {        
@@ -81,11 +87,12 @@ export class GameMap extends AcGameObject {
                     d = 3;
                 }
     
-                if (d >= 0) {
+                if (d >= 0 && !this.automatically_move && !this.has_input && this.time_left > 0) {
                     this.store.state.pk.socket.send(JSON.stringify({
                         event: "move",
                         direction: d
                     }));
+                    this.has_input = true;
                 }
             });
         }
@@ -105,11 +112,21 @@ export class GameMap extends AcGameObject {
         return true;
     }
 
+    // 判断对局是否结束
+    check_end() {
+        for (const snake of this.snakes) {
+            if (snake.status === "die") return true;
+        }
+        return false;
+    }
+
     // 让两条蛇进入下一回合
     next_step() {
         for (const snake of this.snakes) {
             snake.next_step();
         }
+        this.time_left = this.schedule_time;
+        this.has_input = false;
     }
 
     update_size() {
@@ -119,11 +136,30 @@ export class GameMap extends AcGameObject {
         this.ctx.canvas.height = this.L * this.rows;
     }
 
+    update_timer() {
+        if (!this.timer) return;
+
+        if (this.check_end()) {
+            this.timer.innerText = "对局结束";
+        } else if (this.automatically_move) {
+            this.timer.innerText = "等待对手输入";
+        } else if (!this.has_input) {
+            this.time_left -= this.timedelta;
+            if (this.time_left < 0) {
+                this.time_left = 0;
+            }
+            this.timer.innerText =  `倒计时： ${parseInt(this.time_left / 1000)}`;
+        } else {
+            this.timer.innerText = "等待对手输入";
+        }
+    }
+
     update() {
         this.update_size();
         if (this.check_ready()) {
             this.next_step();
         }
+        this.update_timer();
         this.render();
     }
 

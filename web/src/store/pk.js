@@ -9,6 +9,7 @@ export default {
         b_id: 0,
         gameObject: null,
         loser: "none",
+        my_bot_id: -1,
     },
     getters: {
     },
@@ -33,6 +34,9 @@ export default {
         },
         updateLoser(state, loser) {
             state.loser = loser;
+        },
+        updateMyBotId(state, my_bot_id) {
+            state.my_bot_id = my_bot_id;
         }
     },
     actions: {

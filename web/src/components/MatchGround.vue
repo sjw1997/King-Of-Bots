@@ -39,6 +39,7 @@
 import store from '@/store';
 import { ref } from 'vue';
 import $ from 'jquery';
+import { useStore } from 'vuex';
 
 export default {
     setup() {
@@ -47,6 +48,8 @@ export default {
         let bots = ref([]);
         let bot_id = ref(-1);
         let has_selected = ref(false);
+
+        const myStore = useStore();
 
         const click_btn = () => {
             let data = null;
@@ -67,6 +70,7 @@ export default {
                 };
             }
             store.state.pk.socket.send(JSON.stringify(data));
+            myStore.commit("updateMyBotId", bot_id.value);
         };
 
 
