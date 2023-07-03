@@ -28,6 +28,7 @@
                                 <tr>
                                     <th>名称</th>
                                     <th>创建时间</th>
+                                    <th>语言</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -35,6 +36,7 @@
                                 <tr v-for="bot in bots" :key="bot.id">
                                     <td>{{ bot.title }}</td>
                                     <td>{{ bot.createtime }}</td>
+                                    <td>{{ bot.language }}</td>
                                     <td>
                                         <button type="button" class="btn btn-secondary btn-sm" 
                                         style="margin-right: 5px;"

@@ -23,4 +23,5 @@ public class Bot {
     private Date createtime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private Date modifytime;
+    private String language;
 }

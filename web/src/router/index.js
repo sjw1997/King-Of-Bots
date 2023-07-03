@@ -9,6 +9,7 @@ import UserAccountLoginView from '@/views/user/account/UserAccountLoginView';
 import UserAccountRegisterView from '@/views/user/account/UserAccountRegisterView';
 import UserAccountAcWingWebReceiveCodeView from '@/views/user/account/UserAccountAcWingWebReceiveCodeView';
 import UserAccountQQReceiveCodeView from '@/views/user/account/UserAccountQQReceiveCodeView';
+import ExampleIndexView from '@/views/example/ExampleIndexView';
 import store from '@/store';
 
 const routes = [
@@ -26,6 +27,14 @@ const routes = [
     component: PkIndexView,
     meta: {
       requestAuth: true,
+    }
+  },
+  {
+    path: "/example/",
+    name: "example_index",
+    component: ExampleIndexView,
+    meta: {
+      requestAuth: false,
     }
   },
   {

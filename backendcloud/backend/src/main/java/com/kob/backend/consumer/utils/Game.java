@@ -40,7 +40,8 @@ public class Game extends Thread {
                 botA == null ? "" : botA.getContent(),
                 rows - 2,
                 1,
-                new ArrayList<>()
+                new ArrayList<>(),
+                botA == null ? "" : botA.getLanguage()
         );
         playerB = new Player(
                 bId,
@@ -48,7 +49,8 @@ public class Game extends Thread {
                 botB == null ? "" : botB.getContent(),
                 1,
                 cols - 2,
-                new ArrayList<>()
+                new ArrayList<>(),
+                botB == null ? "" : botB.getLanguage()
         );
     }
 
@@ -223,6 +225,7 @@ public class Game extends Thread {
         data.add("user_id", player.getId().toString());
         data.add("bot_code", player.getBotCode());
         data.add("input", getInput(player));
+        data.add("language", player.getLanguage());
         WebSocketServer.restTemplate.postForObject(addBotUrl, data, String.class);
     }
 

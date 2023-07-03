@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 public class BotRunningServiceImpl implements BotRunningService {
     public static final BotPool botPool = new BotPool();
     @Override
-    public String addBot(Integer userId, String botCode, String input) {
-        botPool.addBot(userId, botCode, input);
+    public String addBot(Integer userId, String botCode, String input, String language) {
+        botPool.addBot(userId, botCode, input, language);
         return "add bot successfully";
     }
 }

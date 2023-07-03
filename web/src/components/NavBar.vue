@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <router-link class="navbar-brand" :to="{name: 'home'}">King Of Bots</router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,6 +15,9 @@
                     </li>
                     <li class="nav-item">
                         <router-link :class="route_name === 'ranklist_index' ? 'nav-link active' : 'nav-link'" :to="{name: 'ranklist_index', params: {page: 1}}">排行榜</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :class="route_name === 'example_index' ? 'nav-link active' : 'nav-link'" :to="{name: 'example_index'}">游戏规则与样例程序</router-link>
                     </li>
                 </ul>
                 <ul class="navbar-nav" v-if="!$store.state.user.pullingInfo && $store.state.user.is_login">

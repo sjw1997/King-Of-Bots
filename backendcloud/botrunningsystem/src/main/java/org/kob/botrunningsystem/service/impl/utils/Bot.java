@@ -11,4 +11,5 @@ public class Bot {
     private Integer userId;
     private String botCode;
     private String input;
+    private String language;
 }

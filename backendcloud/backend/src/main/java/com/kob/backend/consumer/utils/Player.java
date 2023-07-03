@@ -17,6 +17,7 @@ public class Player {
     private Integer sx;
     private Integer sy;
     private List<Integer> steps;
+    private String language;
 
     private boolean checkTailIncreasing(int step) {
         if (step <= 10) {

@@ -7,9 +7,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -42,14 +40,6 @@ public class Consumer extends Thread {
 
     @Override
     public void run() {
-        UUID uuid = UUID.randomUUID();
-        String uid = uuid.toString().substring(0, 8);
-
-        Supplier<Integer> botInterface = Reflect.compile(
-                "org.kob.botrunningsystem.utils.Bot" + uid,
-                addUid(bot.getBotCode(), uid)
-        ).create().get();
-
         File file = new File("input.txt");
         try (PrintWriter fout = new PrintWriter(file)) {
             fout.println(bot.getInput());
@@ -58,7 +48,37 @@ public class Consumer extends Thread {
             throw new RuntimeException(e);
         }
 
-        Integer direction = botInterface.get();
+        Integer direction = 0;
+//        UUID uuid = UUID.randomUUID();
+//        String uid = uuid.toString().substring(0, 8);
+        String uid = String.valueOf(Math.abs(bot.getBotCode().hashCode()));
+        String fileName = "", cmd="", language = bot.getLanguage();
+        if ("Java".equals(language)) {
+            fileName = "Main.java";
+            cmd = "/home/acs/kob/backend/test_java.sh";
+        } else if ("C++".equals(language)) {
+            fileName = String.format("main%s.cpp", uid);
+            cmd = "/home/acs/kob/backend/test_cpp.sh " + fileName + " main" + uid + ".out";
+        } else if ("Python3".equals(language)) {
+            fileName = String.format("main%s.py", uid);
+            cmd = "/home/acs/kob/backend/test_python3.sh " + fileName;
+        }
+
+        file = new File(fileName);
+        try (PrintWriter fout = new PrintWriter(file)) {
+            fout.println(bot.getBotCode());
+            fout.flush();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            Process process = Runtime.getRuntime().exec(cmd);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            direction = Integer.parseInt(reader.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
         data.add("user_id", bot.getUserId().toString());

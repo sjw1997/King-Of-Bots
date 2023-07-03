@@ -61,7 +61,6 @@ public class Bot implements java.util.function.Supplier<Integer>{
         int aSx = Integer.parseInt(strs[1]), aSy = Integer.parseInt(strs[2]);
         int bSx = Integer.parseInt(strs[4]), bSy = Integer.parseInt(strs[5]);
 
-
         List<Cell> aCells = getCells(aSx, aSy, strs[3]);
         List<Cell> bCells = getCells(bSx, bSy, strs[6]);
 

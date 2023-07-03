@@ -31,6 +31,7 @@ public class UpdateServiceImpl implements UpdateService {
         String title = data.get("title");
         String description = data.get("description");
         String content = data.get("content");
+        String language = data.get("language");
 
         if (null == title || 0 == title.length()) {
             map.put(ERROR_MESSAGE, "Bot标题不能为空");
@@ -73,7 +74,8 @@ public class UpdateServiceImpl implements UpdateService {
                 description,
                 content,
                 bot.getCreatetime(),
-                new Date()
+                new Date(),
+                language
         );
         botMapper.updateById(new_bot);
         map.put(ERROR_MESSAGE, "success");

@@ -17,7 +17,18 @@
                         <textarea v-model="bot.description" class="form-control" id="description" rows="2" placeholder="请输入简介"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="content" class="form-label">代码</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="content" class="form-label">代码</label>
+                            </div>
+                            <div class="col-6">
+                                <select v-model="bot.language" style="width: 50%; float: right;" class="form-select form-select-sm">
+                                    <option value="C++">C++</option>
+                                    <option value="Java">Java</option>
+                                    <option value="Python3">Python3</option>
+                                </select>
+                            </div>
+                        </div>
                         <VAceEditor
                             v-model:value="bot.content"
                             lang="c_cpp"
@@ -86,28 +97,8 @@ export default {
         const bot = reactive({
             id: "",
             description: "",
-            content: `\
-package org.kob.botrunningsystem.utils;
-
-import java.io.File;
-
-public class Bot implements java.util.function.Supplier {
-    public Integer nextMove(String input) {
-        return 0;
-    }
-
-    @Override
-    public Integer get() {
-        File file = new File("input.txt");
-        try {
-            Scanner sc = new Scanner(file);
-            return nextMove(sc.next());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-}
-`,
+            language: "C++",
+            content: "",
             title: "",
         });
         let error_message = ref("");
@@ -117,6 +108,7 @@ public class Bot implements java.util.function.Supplier {
             bot.description = JSON.parse(JSON.stringify(props.modal_bot.description));
             bot.content = JSON.parse(JSON.stringify(props.modal_bot.content));
             bot.title = JSON.parse(JSON.stringify(props.modal_bot.title));
+            bot.language = JSON.parse(JSON.stringify(props.modal_bot.language));
         }
 
         const store = useStore();
@@ -130,6 +122,7 @@ public class Bot implements java.util.function.Supplier {
                         title: bot.title,
                         content: bot.content,
                         description: bot.description,
+                        language: bot.language,
                     },
                     headers: {
                         Authorization: `Bearer ${store.state.user.token}`
@@ -153,6 +146,7 @@ public class Bot implements java.util.function.Supplier {
                         title: bot.title,
                         content: bot.content,
                         description: bot.description,
+                        language: bot.language,
                     },
                     headers: {
                         Authorization: `Bearer ${store.state.user.token}`

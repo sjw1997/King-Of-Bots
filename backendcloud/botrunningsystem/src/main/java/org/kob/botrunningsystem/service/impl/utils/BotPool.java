@@ -10,10 +10,10 @@ public class BotPool extends Thread {
     private static final ReentrantLock lock = new ReentrantLock();
     private static final Condition condition = lock.newCondition();
 
-    public void addBot(Integer userId, String botCode, String input) {
+    public void addBot(Integer userId, String botCode, String input, String language) {
         lock.lock();
         try {
-            bots.add(new Bot(userId, botCode, input));
+            bots.add(new Bot(userId, botCode, input, language));
             condition.signalAll();
         } finally {
             lock.unlock();
