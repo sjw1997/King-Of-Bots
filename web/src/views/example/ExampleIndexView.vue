@@ -150,7 +150,7 @@ public class Main {
         for (Cell c : bCells) g[c.x][c.y] = 1;
 
         int[] dx = {-1, 0 ,1, 0}, dy = {0, 1, 0, -1};
-        List<int> validDirections = new ArrayList<>();
+        List<Integer> validDirections = new ArrayList<>();
         for (int i = 0; i < 4; i ++ ) {
             int x = aCells.get(aCells.size() - 1).x + dx[i];
             int y = aCells.get(aCells.size() - 1).y + dy[i];
