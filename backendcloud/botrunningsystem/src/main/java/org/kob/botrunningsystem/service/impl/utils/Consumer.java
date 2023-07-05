@@ -52,19 +52,19 @@ public class Consumer extends Thread {
 //        UUID uuid = UUID.randomUUID();
 //        String uid = uuid.toString().substring(0, 8);
         String uid = String.valueOf(Math.abs(bot.getBotCode().hashCode()));
-        String fileName = "", cmd="", language = bot.getLanguage();
+        String programFileName = "", language = bot.getLanguage(), inputFileName="input.txt";
         if ("Java".equals(language)) {
-            fileName = "Main.java";
-            cmd = "/home/acs/kob/backend/test_java.sh";
+            programFileName = "Main.java";
+            language = "java";
         } else if ("C++".equals(language)) {
-            fileName = String.format("main%s.cpp", uid);
-            cmd = "/home/acs/kob/backend/test_cpp.sh " + fileName + " main" + uid + ".out";
+            programFileName = String.format("main%s.cpp", uid);
+            language = "cpp";
         } else if ("Python3".equals(language)) {
-            fileName = String.format("main%s.py", uid);
-            cmd = "/home/acs/kob/backend/test_python3.sh " + fileName;
+            programFileName = String.format("main%s.py", uid);
+            language = "python3";
         }
 
-        file = new File(fileName);
+        file = new File(programFileName);
         try (PrintWriter fout = new PrintWriter(file)) {
             fout.println(bot.getBotCode());
             fout.flush();
@@ -72,10 +72,13 @@ public class Consumer extends Thread {
             throw new RuntimeException(e);
         }
 
+        String cmd = String.format("/home/acs/kob/backend/test.sh %s %s %s", language, programFileName, inputFileName);
         try {
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            direction = Integer.parseInt(reader.readLine());
+            String res = reader.readLine();
+//            System.out.println(res);
+            direction = Integer.parseInt(res);
         } catch (IOException e) {
             e.printStackTrace();
         }
