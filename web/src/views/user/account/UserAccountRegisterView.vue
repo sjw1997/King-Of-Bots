@@ -44,7 +44,7 @@ export default {
         const register = () => {
             error_message.value = "";
             $.ajax({
-                url: "https://app5212.acapp.acwing.com.cn/api/user/account/register/",
+                url: "https://iamsjw.com/api/user/account/register/",
                 type: "POST",
                 data: {
                     username: username.value,

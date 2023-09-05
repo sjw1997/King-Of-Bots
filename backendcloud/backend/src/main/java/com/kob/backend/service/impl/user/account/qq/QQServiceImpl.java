@@ -24,7 +24,7 @@ import java.util.Random;
 public class QQServiceImpl implements QQService {
     private final static String appId = "102049333";
     private final static String appSecret = "tfDWbWDftwmNp32n";
-    private final static String redirectUri = "https://app5212.acapp.acwing.com.cn/user/account/qq/receive_code";
+    private final static String redirectUri = "https://iamsjw.com/user/account/qq/receive_code";
     private final static Random random = new Random();
     private final static String applyAccessTokenUrl = "https://graph.qq.com/oauth2.0/token";
     private final static String applyOpenidUrl = "https://graph.qq.com/oauth2.0/me";

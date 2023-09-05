@@ -77,7 +77,7 @@ export default {
 
         const refresh_bots = () => {
             $.ajax({
-                url: "https://app5212.acapp.acwing.com.cn/api/user/bot/getlist/",
+                url: "https://iamsjw.com/api/user/bot/getlist/",
                 type: "GET",
                 headers: {
                     Authorization: `Bearer ${store.state.user.token}`
@@ -92,7 +92,7 @@ export default {
 
         const remove_bot = (bot_id) => {
             $.ajax({
-                url: "https://app5212.acapp.acwing.com.cn/api/user/bot/remove/",
+                url: "https://iamsjw.com/api/user/bot/remove/",
                 type: "POST",
                 data: {
                     bot_id

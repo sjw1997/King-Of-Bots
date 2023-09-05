@@ -94,7 +94,7 @@ export default {
 
         const acwing_login = () => {
             $.ajax({
-                url: "https://app5212.acapp.acwing.com.cn/api/user/account/web/apply_code/",
+                url: "https://iamsjw.com/api/user/account/web/apply_code/",
                 type: "GET",
                 success(resp) {
                     if (resp.result === "success") {
@@ -106,7 +106,7 @@ export default {
 
         const qq_login = () => {
             $.ajax({
-                url: "https://app5212.acapp.acwing.com.cn/api/user/account/qq/apply_code/",
+                url: "https://iamsjw.com/api/user/account/qq/apply_code/",
                 type: "GET",
                 success(resp) {
                     if (resp.result === "success") {

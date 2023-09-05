@@ -16,7 +16,7 @@ export default {
         const store = useStore();
 
         $.ajax({
-            url: "https://app5212.acapp.acwing.com.cn/api/user/account/qq/receive_code/",
+            url: "https://iamsjw.com/api/user/account/qq/receive_code/",
             type: "GET",
             data: {
                 code: route.query.code,

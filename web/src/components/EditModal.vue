@@ -116,7 +116,7 @@ export default {
             if (props.modal_title === "创建Bot") {
                 error_message.value = "";
                 $.ajax({
-                    url: "https://app5212.acapp.acwing.com.cn/api/user/bot/add/",
+                    url: "https://iamsjw.com/api/user/bot/add/",
                     type: "POST",
                     data: {
                         title: bot.title,
@@ -139,7 +139,7 @@ export default {
             } else {
                 error_message.value = "";
                 $.ajax({
-                    url: "https://app5212.acapp.acwing.com.cn/api/user/bot/update/",
+                    url: "https://iamsjw.com/api/user/bot/update/",
                     type: "POST",
                     data: {
                         bot_id: bot.id,

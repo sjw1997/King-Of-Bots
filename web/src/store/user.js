@@ -28,7 +28,7 @@ export default {
     actions: {
         login(context, data) {
             $.ajax({
-                url: "https://app5212.acapp.acwing.com.cn/api/user/account/token/",
+                url: "https://iamsjw.com/api/user/account/token/",
                 type: "POST",
                 data: {
                     username: data.username,
@@ -50,7 +50,7 @@ export default {
         },
         getInfo(context, data) {
             $.ajax({
-                url: "https://app5212.acapp.acwing.com.cn/api/user/account/info/",
+                url: "https://iamsjw.com/api/user/account/info/",
                 type: "GET",
                 headers: {
                     'Authorization': "Bearer " + context.state.token

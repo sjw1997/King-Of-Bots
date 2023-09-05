@@ -33,7 +33,7 @@ export default {
         };
 
         $.ajax({
-            url: `https://app5212.acapp.acwing.com.cn/api/record/getcontent/${recordId}/`,
+            url: `https://iamsjw.com/api/record/getcontent/${recordId}/`,
             type: "GET",
             success(resp) {
                 if (resp) {
