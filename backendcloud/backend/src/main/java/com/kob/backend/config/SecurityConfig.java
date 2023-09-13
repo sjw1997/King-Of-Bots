@@ -51,8 +51,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/user/account/qq/apply_code/",
                         "/api/user/account/qq/receive_code/",
                         "/api/translate/",
-                        "/api/punchin/getdays/",
-                        "/api/punchin/addday/"
+                        "/api/tomato/get/days/{userId}/",
+                        "/api/tomato/get/scores/{userId}/",
+                        "/api/tomato/get/current_day_id/",
+                        "/api/tomato/update/focus_seconds/",
+                        "/api/tomato/update/scores/"
                 ).permitAll()
                 .antMatchers("/pk/start/game/", "/pk/receive/bot/move/").hasIpAddress("127.0.0.1")
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
