@@ -18,9 +18,9 @@ public class TomatoController {
         return tomatoService.getDays(userId);
     }
 
-    @GetMapping("/api/tomato/get/scores/{userId}/")
-    public JSONObject getScores(@PathVariable Integer userId) {
-        return tomatoService.getScores(userId);
+    @GetMapping("/api/tomato/get/user_info/{userId}/")
+    public JSONObject getUserInfo(@PathVariable Integer userId) {
+        return tomatoService.getUserInfo(userId);
     }
 
     @GetMapping("/api/tomato/get/current_day_id/")
@@ -45,5 +45,12 @@ public class TomatoController {
         Integer userId = Integer.parseInt(Objects.requireNonNull(data.getFirst("userId")));
         Integer delta = Integer.parseInt(Objects.requireNonNull(data.getFirst("delta")));
         return tomatoService.updateScores(userId, delta);
+    }
+
+    @PostMapping("/api/tomato/update/target_focus_seconds/")
+    public JSONObject updateTargetFocusSeconds(@RequestParam MultiValueMap<String, String> data) {
+        Integer userId = Integer.parseInt(Objects.requireNonNull(data.getFirst("userId")));
+        Integer newTargetFocusSeconds = Integer.parseInt(Objects.requireNonNull(data.getFirst("newTargetFocusSeconds")));
+        return tomatoService.updateTargetFocusSeconds(userId, newTargetFocusSeconds);
     }
 }

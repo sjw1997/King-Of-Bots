@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TomatoDays {
+public class TomatoDay {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer year;
