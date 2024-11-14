@@ -89,7 +89,7 @@ class Player:
 
 if __name__ == "__main__":
     json_text = ""
-    with open("bot_config.json") as f:
+    with open("bot_config.json", encoding='utf-8') as f:
         json_text = f.read()
     bot = json.loads(json_text)
 
